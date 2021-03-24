@@ -16,6 +16,7 @@
     "ffmpeg-static": "^4.2.8",
     "nodemon": "^2.0.7",
     "ytdl-core": "^4.5.0",
-    "ytsearcher": "^1.2.3"
+    "ytsearcher": "^1.2.3",
+    "ytsr": "^3.3.1"
   }
 }

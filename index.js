@@ -4,12 +4,7 @@ dotenv.config()
 
 const Discord = require('discord.js')
 const ytdl = require('ytdl-core')
-const { YTSearcher } = require('ytsearcher')
-
-const searcher = new YTSearcher({
-    key: process.env.YTSEARCHER_KEY,
-    revealed: true
-})
+const ytsr = require('ytsr');
 
 const token = process.env.TOKEN
 
@@ -50,8 +45,10 @@ app.on('message', async (msg) => {
 
         if ( link.length > 2 ) {
             link.shift()
-            let result = await searcher.search(link.join(' '), {type: 'video'})            
-            finalUrlNameSong = result.first.url
+
+            const searchResults = await ytsr(link.join(' '), { limit: 1 });
+            finalUrlNameSong = searchResults.items[0].url
+
         } else {
             finalUrlNameSong = link[1]
         }
