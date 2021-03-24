@@ -48,8 +48,6 @@ app.on('message', async (msg) => {
         let finalUrlNameSong = ''
         let link = msg.content.split(' ')
 
-        console.log(link.length)
-
         if ( link.length > 2 ) {
             link.shift()
             let result = await searcher.search(link.join(' '), {type: 'video'})            
@@ -57,8 +55,6 @@ app.on('message', async (msg) => {
         } else {
             finalUrlNameSong = link[1]
         }
-
-        console.log(ytdl.validateURL(finalUrlNameSong))
 
         if ( !ytdl.validateURL(finalUrlNameSong) ) return msg.channel.send('Link/Nome inválido') 
 
@@ -133,6 +129,14 @@ app.on('message', async (msg) => {
         }
     }
 
+    else if ( msg.content.startsWith('.cq') || msg.content.startsWith('.clearQueue') ) { 
+        
+        if (typeof serverQueue !== 'undefined') {
+            serverQueue.songs = []
+            return msg.channel.send('Queue limpa')
+        }
+    }
+
     function play(guild, song) {
         const serverQueue = queue.get(guild.id)
 
@@ -157,7 +161,7 @@ app.on('message', async (msg) => {
             return msg.channel.send('Entre em um canal de voz primeiro')
         }
         serverQueue.songs = []
-        serverQueue.txtChannel.send('Xau 👄')
+        msg.channel.send('Xau 👄')
         serverQueue.connection.dispatcher.end()
     }
 
