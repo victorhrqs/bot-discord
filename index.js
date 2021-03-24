@@ -1,3 +1,7 @@
+const dotenv = require('dotenv')
+
+dotenv.config()
+
 const Discord = require('discord.js')
 const ytdl = require('ytdl-core')
 const { YTSearcher } = require('ytsearcher')
@@ -113,6 +117,21 @@ app.on('message', async (msg) => {
 
     else if ( msg.content.startsWith('.stop') ) {
         stop(msg, serverQueue)
+    }
+
+    else if ( msg.content.startsWith('.q') || msg.content.startsWith('.queue') ) {
+        // show queue
+        if (typeof serverQueue !== 'undefined') {
+          for ( let i = 0; i < serverQueue.songs.length; i++ ) {
+              if ( i == 0 ) {
+                  msg.channel.send(`próxima a tocar: ${serverQueue.songs[i].title}`)
+                  continue
+              }
+              msg.channel.send(`${i}º a tocar: ${serverQueue.songs[i].title}`)
+          }
+        } else {
+            msg.channel.send('Tem nada na fila não carai')
+        }
     }
 
     function play(guild, song) {
