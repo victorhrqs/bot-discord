@@ -122,12 +122,11 @@ app.on('message', async (msg) => {
     else if ( msg.content.startsWith('.q') || msg.content.startsWith('.queue') ) {
         // show queue
         if (typeof serverQueue !== 'undefined') {
-          for ( let i = 0; i < serverQueue.songs.length; i++ ) {
-              if ( i == 0 ) {
-                  msg.channel.send(`próxima a tocar: ${serverQueue.songs[i].title}`)
-                  continue
-              }
-              msg.channel.send(`${i}º a tocar: ${serverQueue.songs[i].title}`)
+          for ( let i = 0; i < serverQueue.songs.length; i++ ) {              
+              
+              if ( i == 0 ) msg.channel.send(`tocando: ${serverQueue.songs[i].title}`)
+              if ( i == 1 ) msg.channel.send(`próxima a tocar: ${serverQueue.songs[i].title}`)
+              if ( i > 1 ) msg.channel.send(`${i - 1}º na fila: ${serverQueue.songs[i].title}`)
           }
         } else {
             msg.channel.send('Tem nada na fila não carai')
